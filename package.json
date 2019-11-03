@@ -18,6 +18,7 @@
     "express": "^4.17.1",
     "history": "4.9.0",
     "http-errors": "^1.7.3",
+    "moment": "^2.24.0",
     "mongoose": "^5.7.7",
     "mongoose-sequence": "^5.2.2",
     "morgan": "^1.9.1",
@@ -57,12 +58,10 @@
           "type": "link",
           "path": "/Applications"
         }
-      ],
-      "icon": "build/drms-app.png"
+      ]
     },
     "win": {
-      "target": "NSIS",
-      "icon": "build/drms-app.ico"
+      "target": "NSIS"
     },
     "files": [
       "build/**/*",
@@ -72,7 +71,7 @@
       "buildResources": "assets"
     },
     "publish": {
-      "provider": "github"
+      "provider": "https://github.com/rkgupta/doc-referral-mgmt.git"
     }
   },
   "main": "public/electron.js",

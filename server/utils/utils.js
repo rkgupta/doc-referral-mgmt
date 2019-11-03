@@ -54,12 +54,14 @@ module.exports.getFilter = function(req) {
   var startDate;
   if (req.query.startDate) {
     startDate = new Date(req.query.startDate);
+    startDate.setUTCHours(0, 0, 0, 0);
   }
 
   // End Date
   var endDate;
   if (req.query.endDate) {
     endDate = new Date(req.query.endDate);
+    endDate.setUTCHours(23, 59, 59, 999);
   }
   let dataFilter = {};
   if (startDate) {
