@@ -15,7 +15,7 @@ const dataProvider = jsonServerProvider('http://localhost:8080/api');
 const App = () => (
   <Admin appLayout={CustomLayout} authProvider={authProvider} dataProvider={dataProvider}>
     <Resource name="doctors" list={DoctorList} edit={DoctorEdit} create={DoctorCreate} icon={GroupAddOutlinedIcon} />
-    <Resource name="prescriptions" list={ReferralList} create={ReferralCreate} icon={EventNoteOutlinedIcon} />
+    <Resource name="referrals" list={ReferralList} create={ReferralCreate} icon={EventNoteOutlinedIcon} />
   </Admin>
 );
 

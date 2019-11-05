@@ -10,11 +10,29 @@ import {
   Datagrid,
   TextField,
   EmailField,
-  EditButton
+  EditButton,
+  downloadCSV
 } from 'react-admin';
 
+import { unparse as convertToCSV } from 'papaparse/papaparse.min';
+
+const exporter = doctors => {
+  console.log(doctors);
+  const doctorsForExport = doctors.map(doctor => {
+    const { _id, __v, ...doctorForExport } = doctor; // omit _id and __v
+    //doctor.author_name = post.author.name; // add a field
+    return doctorForExport;
+  });
+  const csv = convertToCSV({
+    data: doctorsForExport,
+    fields: ['id', 'name', 'email', 'phone', 'address'] // order fields in the export
+  });
+  console.log(csv);
+  downloadCSV(csv, 'doctors'); // download as 'doctors.csv` file
+};
+
 export const DoctorList = props => (
-  <List {...props}>
+  <List {...props} exporter={exporter}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
       <TextField source="name" />

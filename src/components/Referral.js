@@ -10,8 +10,11 @@ import {
   Datagrid,
   TextField,
   DateInput,
-  Filter
+  Filter,
+  downloadCSV
 } from 'react-admin';
+
+import { unparse as convertToCSV } from 'papaparse/papaparse.min';
 
 const getDefaultDates = () => {
   const start_date = moment()
@@ -27,11 +30,41 @@ const getDefaultDates = () => {
   return [start_date, end_date];
 };
 
+const exporter = referrals => {
+  const exportData = [];
+  const doctors = {};
+
+  referrals.forEach(referral => {
+    if (!doctors[referral.doctor]) {
+      const doctorRow = {};
+      doctorRow.doctor = referral.doctor;
+      doctorRow[referral.referralType] = Number(referral.referralUnit);
+      doctors[referral.doctor] = doctorRow;
+    } else {
+      const doctorRow = doctors[referral.doctor];
+      doctorRow[referral.referralType] = doctorRow[referral.referralType]
+        ? Number(doctorRow[referral.referralType]) + Number(referral.referralUnit)
+        : Number(referral.referralUnit);
+    }
+  });
+
+  Object.keys(doctors).forEach(function(doctor) {
+    exportData.push(doctors[doctor]);
+  });
+
+  const csv = convertToCSV({
+    data: exportData,
+    fields: ['doctor', 'Bloodtest', 'Ultrasound', 'X-Ray'] // order fields in the export
+  });
+  downloadCSV(csv, 'total-referrals'); // download as 'total-referrals.csv` file
+};
+
 export const ReferralList = props => (
   <List
     filters={<ReferralFilter />}
     {...props}
-    filterDefaultValues={{ startDate: getDefaultDates()[0], endDate: getDefaultDates()[1] }}>
+    filterDefaultValues={{ startDate: getDefaultDates()[0], endDate: getDefaultDates()[1] }}
+    exporter={exporter}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
       <TextField source="doctor" />

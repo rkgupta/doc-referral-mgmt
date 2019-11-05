@@ -20,11 +20,11 @@ router.use(function(req, res, next) {
   next();
 });
 
-router.get('/prescriptions', referralCtrl.findAll);
-router.get('/prescriptions/:id', referralCtrl.findone);
-router.post('/prescriptions', referralCtrl.create);
-router.put('/prescriptions/:id', referralCtrl.update);
-router.delete('/prescriptions/:id', referralCtrl.delete);
+router.get('/referrals', referralCtrl.findAll);
+router.get('/referrals/:id', referralCtrl.findone);
+router.post('/referrals', referralCtrl.create);
+router.put('/referrals/:id', referralCtrl.update);
+router.delete('/referrals/:id', referralCtrl.delete);
 
 router.get('/doctors', doctorCtrl.findAll);
 router.get('/doctors/:id', doctorCtrl.findone);
