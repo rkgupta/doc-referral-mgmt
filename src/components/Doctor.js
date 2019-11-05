@@ -23,16 +23,22 @@ const exporter = doctors => {
     //doctor.author_name = post.author.name; // add a field
     return doctorForExport;
   });
-  const csv = convertToCSV({
-    data: doctorsForExport,
-    fields: ['id', 'name', 'email', 'phone', 'address'] // order fields in the export
-  });
-  console.log(csv);
+
+  const exportData = [
+    { id: 'S. NO', name: 'DOCTOR NAME', email: 'EMAIL', phone: 'PHONE NO', address: 'ADDRESS' }
+  ].concat(doctorsForExport);
+  const csv = convertToCSV(
+    {
+      data: exportData,
+      fields: ['id', 'name', 'email', 'phone', 'address'] // order fields in the export
+    },
+    { header: false }
+  );
   downloadCSV(csv, 'doctors'); // download as 'doctors.csv` file
 };
 
 export const DoctorList = props => (
-  <List {...props} exporter={exporter}>
+  <List {...props} exporter={exporter} perPage={200}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
       <TextField source="name" />

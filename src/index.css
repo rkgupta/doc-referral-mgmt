@@ -13,3 +13,8 @@ code {
 .hide-helper {
   display: none;
 }
+
+th {
+  text-transform: uppercase;
+  background-color: #bbdefb;
+}

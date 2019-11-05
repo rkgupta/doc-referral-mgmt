@@ -9,6 +9,7 @@ import {
   TextInput,
   Datagrid,
   TextField,
+  DateField,
   DateInput,
   Filter,
   downloadCSV
@@ -48,14 +49,26 @@ const exporter = referrals => {
     }
   });
 
-  Object.keys(doctors).forEach(function(doctor) {
-    exportData.push(doctors[doctor]);
+  exportData.push({
+    'S.No': 'S. NO',
+    doctor: 'DOCTOR',
+    PATH: 'PATH',
+    USG: 'USG',
+    'X-RAY': 'X-RAY',
+    ECG: 'ECG',
+    PFT: 'PFT'
+  });
+  Object.keys(doctors).forEach((doctor, i) => {
+    exportData.push(Object.assign({ 'S.No': i + 1 }, doctors[doctor]));
   });
 
-  const csv = convertToCSV({
-    data: exportData,
-    fields: ['doctor', 'Bloodtest', 'Ultrasound', 'X-Ray'] // order fields in the export
-  });
+  const csv = convertToCSV(
+    {
+      data: exportData,
+      fields: ['S.No', 'doctor', 'PATH', 'USG', 'X-RAY', 'ECG', 'PFT'] // order fields in the export
+    },
+    { header: false }
+  );
   downloadCSV(csv, 'total-referrals'); // download as 'total-referrals.csv` file
 };
 
@@ -65,14 +78,14 @@ export const ReferralList = props => (
     {...props}
     filterDefaultValues={{ startDate: getDefaultDates()[0], endDate: getDefaultDates()[1] }}
     exporter={exporter}
-    perPage={200}
+    perPage={2000}
     sort={{ field: 'timestamp', order: 'DESC' }}>
     <Datagrid rowClick="edit">
-      <TextField source="id" />
-      <TextField source="doctor" />
-      <TextField source="referralType" />
-      <TextField source="referralUnit" />
-      <TextField source="timestamp" />
+      <TextField source="id" sortable={false} />
+      <TextField source="doctor" sortable={false} />
+      <TextField source="referralType" sortable={false} />
+      <TextField source="referralUnit" sortable={false} />
+      <DateField source="timestamp" sortable={false} />
     </Datagrid>
   </List>
 );
@@ -86,9 +99,11 @@ export const ReferralCreate = props => (
       <SelectInput
         source="referralType"
         choices={[
-          { id: 'X-Ray', name: 'X-Ray' },
-          { id: 'Ultrasound', name: 'Ultrasound' },
-          { id: 'Blood Test', name: 'Blood Test' }
+          { id: 'PATH', name: 'PATH' },
+          { id: 'USG', name: 'USG' },
+          { id: 'X-Ray', name: 'X-RAY' },
+          { id: 'ECG', name: 'ECG' },
+          { id: 'PFT', name: 'PFT' }
         ]}
       />
       <TextInput source="referralUnit" />
