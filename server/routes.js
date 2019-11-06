@@ -17,6 +17,8 @@ router.use(function(req, res, next) {
   // Set Limit
   res.locals.limit = utils.getLimit(req);
 
+  res.locals.skip = utils.getPage(req);
+
   next();
 });
 

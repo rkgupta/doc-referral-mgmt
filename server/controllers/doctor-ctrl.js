@@ -46,18 +46,26 @@ module.exports.findAll = function(req, res) {
 
   res.locals.limit = res.locals.limit || 200;
 
-  Doctor.find(res.locals.filter)
-    .limit(res.locals.limit)
-    .sort({ timestamp: -1 })
-    .lean(true)
-    .exec(function(err, docs) {
-      if (err) {
-        logger.error(err);
-        utils.send500(res, err);
-      } else {
-        utils.send200(res, docs);
-      }
-    });
+  Doctor.count(res.locals.filter, (err, totalCount) => {
+    if (err) {
+      logger.error(err);
+      utils.send500(res, err);
+    }
+    Doctor.find(res.locals.filter)
+      .limit(res.locals.limit)
+      .skip(res.locals.skip)
+      .sort({ timestamp: -1 })
+      .lean(true)
+      .exec(function(err, docs) {
+        if (err) {
+          logger.error(err);
+          utils.send500(res, err);
+        } else {
+          res.locals.totalCount = totalCount;
+          utils.send200(res, docs);
+        }
+      });
+  });
 };
 
 module.exports.update = function(req, res) {

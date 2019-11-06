@@ -38,7 +38,7 @@ const exporter = doctors => {
 };
 
 export const DoctorList = props => (
-  <List {...props} exporter={exporter} perPage={200}>
+  <List {...props} exporter={exporter} perPage={20}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
       <TextField source="name" />

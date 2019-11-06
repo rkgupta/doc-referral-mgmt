@@ -78,7 +78,7 @@ export const ReferralList = props => (
     {...props}
     filterDefaultValues={{ startDate: getDefaultDates()[0], endDate: getDefaultDates()[1] }}
     exporter={exporter}
-    perPage={2000}
+    perPage={100}
     sort={{ field: 'timestamp', order: 'DESC' }}>
     <Datagrid rowClick="edit">
       <TextField source="id" sortable={false} />

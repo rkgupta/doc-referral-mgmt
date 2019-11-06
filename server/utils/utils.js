@@ -6,7 +6,7 @@ const slugify = require('slugify');
  */
 module.exports.send200 = function(res, data) {
   res.status(200);
-  res.set('X-Total-Count', data.length);
+  res.set('X-Total-Count', res.locals.totalCount);
   res.json(data);
 };
 
@@ -93,13 +93,26 @@ module.exports.getAsOfDate = function(req) {
  *  Parses request query parameters for a limit
  */
 module.exports.getLimit = function(req) {
-  if (!isNaN(req.query.limit)) {
-    var limit = parseInt(req.query.limit);
+  if (!isNaN(req.query._start) && !isNaN(req.query._end)) {
+    var limit = parseInt(req.query._end) - parseInt(req.query._start);
     if (limit > 0) {
       return limit;
     }
   }
-  return null;
+  return 200;
+};
+
+/*
+ *  Parses request query parameters for a page
+ */
+module.exports.getPage = function(req) {
+  if (!isNaN(req.query._start)) {
+    var skip = parseInt(req.query._start);
+    if (skip > 0) {
+      return skip;
+    }
+  }
+  return 0;
 };
 
 /*

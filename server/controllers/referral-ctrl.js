@@ -8,20 +8,28 @@ const Referral = require('../models/referral');
 module.exports.findAll = function(req, res) {
   logger.info('Referral > searching for referrals');
 
-  res.locals.limit = res.locals.limit || 200;
+  res.locals.limit = res.locals.limit || 2000;
 
-  Referral.find(res.locals.filter)
-    .limit(res.locals.limit)
-    .sort({ timestamp: -1 })
-    .lean(true)
-    .exec(function(err, referrals) {
-      if (err) {
-        logger.error(err);
-        utils.send500(res, err);
-      } else {
-        utils.send200(res, referrals);
-      }
-    });
+  Referral.count(res.locals.filter, (err, totalCount) => {
+    if (err) {
+      logger.error(err);
+      utils.send500(res, err);
+    }
+    Referral.find(res.locals.filter)
+      .limit(res.locals.limit)
+      .skip(res.locals.skip)
+      .sort({ timestamp: -1 })
+      .lean(true)
+      .exec(function(err, referrals) {
+        if (err) {
+          logger.error(err);
+          utils.send500(res, err);
+        } else {
+          res.locals.totalCount = totalCount;
+          utils.send200(res, referrals);
+        }
+      });
+  });
 };
 
 module.exports.findone = function(req, res) {
