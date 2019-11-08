@@ -80,3 +80,5 @@ process.once('SIGUSR2', function() {
     process.kill(process.pid, 'SIGUSR2');
   });
 });
+
+module.exports = app;

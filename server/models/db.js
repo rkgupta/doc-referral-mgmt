@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const logger = require('../utils/logger').logger;
 
 var gracefulShutdown;
-var dbURI = process.env['MONGODB_URI'] || '';
+var dbURI = process.env['MONGODB_URI'] || 'mongodb://localhost:27017/doctor-referrals';
 
 /*
  * Mongoose by default sets the auto_reconnect option to true.
