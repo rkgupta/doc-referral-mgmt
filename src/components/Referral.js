@@ -101,7 +101,7 @@ export const ReferralCreate = props => (
         choices={[
           { id: 'PATH', name: 'PATH' },
           { id: 'USG', name: 'USG' },
-          { id: 'X-Ray', name: 'X-RAY' },
+          { id: 'X-RAY', name: 'X-RAY' },
           { id: 'ECG', name: 'ECG' },
           { id: 'PFT', name: 'PFT' }
         ]}
