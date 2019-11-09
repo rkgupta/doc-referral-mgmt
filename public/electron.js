@@ -27,9 +27,6 @@ try {
       }
     });
 
-    const image = electron.nativeImage.createFromPath(app.getAppPath() + '/assets/icon.icns');
-    app.dock.setIcon(image);
-
     mainWindow.loadURL(
       isDev
         ? 'http://localhost:3000'
@@ -39,9 +36,6 @@ try {
             slashes: true
           })
     );
-
-    //mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
-    //mainWindow.loadURL('http://localhost:8080');
     //mainWindow.webContents.openDevTools();
     mainWindow.on('closed', () => (mainWindow = null));
   }

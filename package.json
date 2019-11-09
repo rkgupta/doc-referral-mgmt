@@ -1,5 +1,5 @@
 {
-  "name": "doc-referral-mgmt",
+  "name": "smart-lab",
   "version": "0.1.0",
   "license": "MIT",
   "author": "Rajnikant Gupta (capricorn.raj@gmail.com)",
@@ -13,14 +13,14 @@
     "react-test": "react-scripts test --env=jsdom",
     "react-eject": "react-scripts eject",
     "electron-build": "electron-builder",
-    "build": "yarn react-build && webpack --prod && yarn electron-build",
+    "build": "rm -rf dist && yarn react-build && webpack --prod && yarn electron-build",
     "start": "concurrently \"nodemon server/server.js\" \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "build": {
     "appId": "org.rk.apps.drms",
     "mac": {
       "category": "private.app-category.utilities",
-      "icon": "assets/hospital.png"
+      "icon": "./public/assets/icon.icns"
     },
     "nsis": {
       "createDesktopShortcut": "always"
@@ -37,7 +37,8 @@
           "type": "link",
           "path": "/Applications"
         }
-      ]
+      ],
+      "icon": "./public/assets/icon.icns"
     },
     "win": {
       "target": "NSIS",
