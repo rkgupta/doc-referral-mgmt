@@ -13,7 +13,7 @@
     "react-test": "react-scripts test --env=jsdom",
     "react-eject": "react-scripts eject",
     "electron-build": "electron-builder",
-    "build": "rm -rf dist && yarn react-build && webpack --prod && yarn electron-build",
+    "build": "yarn react-build && webpack --prod && yarn electron-build",
     "start": "concurrently \"nodemon server/server.js\" \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "build": {
