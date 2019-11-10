@@ -1,5 +1,5 @@
 {
-  "name": "smart-lab",
+  "name": "SmartLab",
   "version": "0.1.0",
   "license": "MIT",
   "author": "Rajnikant Gupta (capricorn.raj@gmail.com)",
@@ -42,7 +42,7 @@
     },
     "win": {
       "target": "NSIS",
-      "icon": "assets/hospital.ico"
+      "icon": "./public/assets/hospital.png"
     },
     "files": [
       "build/**/*",
